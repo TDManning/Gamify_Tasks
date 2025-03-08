@@ -16,7 +16,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: $(cat .ruby-version)
+          ruby-version: 3.2.2
           bundler-cache: true
 
       - name: Cache Ruby dependencies
