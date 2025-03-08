@@ -51,10 +51,10 @@ gem "thruster", require: false
 gem "tzinfo-data", platforms: %i[windows jruby]
 
 # ========================
-# Testing gems
+# Development and test gems
 # ========================
 
-group :test do
+group :development, :test do
   # For creating test data in tests
   gem "factory_bot_rails"
   
@@ -69,13 +69,7 @@ group :test do
   
   # For tracking test coverage
   gem "simplecov", require: false
-end
 
-# ========================
-# Development and test gems
-# ========================
-
-group :development, :test do
   # Static code analyzer for security vulnerabilities
   gem "brakeman", require: false
 
