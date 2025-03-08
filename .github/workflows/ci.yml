@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: vendor/bundle
-          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-${{ github.sha }}
+          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-3.2.2
           restore-keys: |
             setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-
 
@@ -40,14 +40,14 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: $(cat .ruby-version)
+          ruby-version: 3.2.2
           bundler-cache: true
 
       - name: Cache Ruby dependencies
         uses: actions/cache@v3
         with:
           path: vendor/bundle
-          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-${{ github.sha }}
+          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-3.2.2
           restore-keys: |
             setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-
 
@@ -83,14 +83,14 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: $(cat .ruby-version)
+          ruby-version: 3.2.2
           bundler-cache: true
 
       - name: Cache Ruby dependencies
         uses: actions/cache@v3
         with:
           path: vendor/bundle
-          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-${{ github.sha }}
+          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-3.2.2
           restore-keys: |
             setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-
 
@@ -111,3 +111,7 @@ jobs:
           tail -f log/test.log &
           bin/rails db:test:prepare
           bin/rails test
+
+      - name: Show Rails logs if tests fail
+        if: failure()
+        run: cat log/test.log
