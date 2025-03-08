@@ -48,7 +48,7 @@ gem "solid_queue"
 gem "thruster", require: false
 
 # Time zone data for handling time zones on Windows and JRuby platforms
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 # ========================
 # Testing gems
@@ -56,19 +56,19 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 group :test do
   # For creating test data in tests
-  gem 'factory_bot_rails'
+  gem "factory_bot_rails"
   
   # For generating fake data in tests
-  gem 'faker'
+  gem "faker"
   
   # RSpec testing framework for Rails
-  gem 'rspec-rails', '~> 6.0'
+  gem "rspec-rails", "~> 6.0"
   
   # Provides RSpec matchers for testing model relationships and validations
-  gem 'shoulda-matchers'
+  gem "shoulda-matchers"
   
   # For tracking test coverage
-  gem 'simplecov', require: false
+  gem "simplecov", require: false
 end
 
 # ========================
@@ -80,7 +80,7 @@ group :development, :test do
   gem "brakeman", require: false
 
   # Interactive debugging tool for Ruby
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
 
   # Load environment variables from `.env` files
   gem "dotenv-rails"
