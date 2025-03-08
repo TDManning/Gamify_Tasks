@@ -1,49 +1,90 @@
 source "https://rubygems.org"
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
-# Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
-# Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 5.0"
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-# gem "jbuilder"
 
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+# For secure password hashing
+gem "bcrypt"
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
-
-# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache"
-gem "solid_queue"
-gem "solid_cable"
-
-# Reduces boot times through caching; required in config/boot.rb
+# Boosts boot speed by caching expensive operations
 gem "bootsnap", require: false
 
-# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+# For encoding and decoding JSON Web Tokens (JWT) for authentication
+gem "jwt"
+
+# For serializing data to JSON API format
+gem "jsonapi-serializer"
+
+# For deploying and managing containers in production
 gem "kamal", require: false
 
-# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+# PostgreSQL database adapter for ActiveRecord
+gem "pg", "~> 1.1"
+
+# Puma web server for better performance
+gem "puma", ">= 5.0"
+
+# Middleware to handle Cross-Origin Resource Sharing (CORS) requests
+gem "rack-cors"
+
+# Redis client for handling in-memory data structures and background jobs
+gem "redis"
+
+# Swagger documentation for API endpoints
+gem "rswag"
+
+# Background job processing framework
+gem "sidekiq"
+
+# Caching library for fast data retrieval
+gem "solid_cache"
+
+# Real-time WebSocket communication for Rails
+gem "solid_cable"
+
+# Background job processing similar to Sidekiq but native to Rails
+gem "solid_queue"
+
+# CLI tool for running Rails applications remotely
 gem "thruster", require: false
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+# Time zone data for handling time zones on Windows and JRuby platforms
+gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-# gem "rack-cors"
+# ========================
+# Testing gems
+# ========================
 
-group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
+group :test do
+  # For creating test data in tests
+  gem 'factory_bot_rails'
+  
+  # For generating fake data in tests
+  gem 'faker'
+  
+  # RSpec testing framework for Rails
+  gem 'rspec-rails', '~> 6.0'
+  
+  # Provides RSpec matchers for testing model relationships and validations
+  gem 'shoulda-matchers'
+  
+  # For tracking test coverage
+  gem 'simplecov', require: false
 end
 
+# ========================
+# Development and test gems
+# ========================
 
+group :development, :test do
+  # Static code analyzer for security vulnerabilities
+  gem "brakeman", require: false
+
+  # Interactive debugging tool for Ruby
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Load environment variables from `.env` files
+  gem "dotenv-rails"
+
+  # Rubocop configuration tailored for Rails
+  gem "rubocop-rails-omakase", require: false
+end
