@@ -1,0 +1,43 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/controllers/application_controller.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/jobs/application_job.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/application_record.rb": {
+        "lines": [
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      }
+    },
+    "timestamp": 1741443841
+  }
+}

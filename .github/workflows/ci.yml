@@ -16,14 +16,23 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: 3.2.2
           bundler-cache: true
 
+      - name: Cache Ruby dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-3.2.2
+          restore-keys: |
+            setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-
+
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        run: bin/brakeman --no-pager --exit-on-warn
 
   lint:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,11 +40,19 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: 3.2.2
           bundler-cache: true
 
+      - name: Cache Ruby dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-3.2.2
+          restore-keys: |
+            setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-
+
       - name: Lint code for consistent style
-        run: bin/rubocop -f github
+        run: bin/rubocop -f github --fail-level=W
 
   test:
     runs-on: ubuntu-latest
@@ -50,11 +67,11 @@ jobs:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      # redis:
-      #   image: redis
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - name: Install packages
@@ -66,12 +83,35 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: 3.2.2
           bundler-cache: true
+
+      - name: Cache Ruby dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-3.2.2
+          restore-keys: |
+            setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-
+
+      - name: Setup database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
 
       - name: Run tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test
+          REDIS_URL: redis://localhost:6379/0
+        run: |
+          tail -f log/test.log &
+          bin/rails db:test:prepare
+          bin/rails test
+
+      - name: Show Rails logs if tests fail
+        if: failure()
+        run: cat log/test.log
