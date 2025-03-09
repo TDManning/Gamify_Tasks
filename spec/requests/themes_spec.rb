@@ -1,10 +1,21 @@
 require 'rails_helper'
 
-RSpec.describe "Themes", type: :request do
-  describe "GET /themes" do
-    it "works! (now write some real specs)" do
-      get themes_index_path
-      expect(response).to have_http_status(200)
-    end
+RSpec.describe "Themes API", type: :request do
+  let!(:theme) { create(:theme) }
+
+  let(:valid_attributes) do
+    attributes_for(:theme)
+  end
+
+  describe "GET /api/v1/themes" do
+  end
+
+  describe "POST /api/v1/themes" do
+  end
+
+  describe "PATCH /api/v1/themes/:id" do
+  end
+
+  describe "DELETE /api/v1/themes/:id" do
   end
 end
