@@ -62,7 +62,7 @@ group :development, :test do
   gem "faker"
   
   # RSpec testing framework for Rails
-  gem "rspec-rails", "~> 6.0"
+  gem "rspec-rails", "~> 7.1"
   
   # Provides RSpec matchers for testing model relationships and validations
   gem "shoulda-matchers"
