@@ -1,6 +1,92 @@
 {
   "RSpec": {
     "coverage": {
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/reward.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/task.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          3,
+          null,
+          1,
+          null,
+          1,
+          27,
+          null,
+          null,
+          1,
+          27,
+          null,
+          null
+        ]
+      },
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/theme.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/user_reward.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/user.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
       "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/controllers/application_controller.rb": {
         "lines": [
           0,
@@ -28,100 +114,8 @@
           0
         ],
         "branches": {}
-      },
-      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/application_record.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/reward.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/task.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/theme.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/user.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/models/user_reward.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
       }
     },
-    "timestamp": 1741491552
+    "timestamp": 1741538127
   }
 }
