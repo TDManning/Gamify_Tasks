@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.1"
 
 # For secure password hashing
-gem "bcrypt"
+gem 'bcrypt', '~> 3.1.7'
 
 # Boosts boot speed by caching expensive operations
 gem "bootsnap", require: false

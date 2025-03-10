@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'login', to: 'sessions#create'
       resources :tasks, only: [:index, :create, :show, :update, :destroy]
+      get 'profile', to: 'users#show' 
     end
-  # Defines the root path route ("/")
-  # root "posts#index"
+  end
 end
