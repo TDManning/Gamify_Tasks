@@ -1,63 +1,74 @@
-test:
-  runs-on: ubuntu-latest
+name: CI
 
-  services:
-    postgres:
-      image: postgres
-      env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-      ports:
-        - 5432:5432
-      options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-    redis:
-      image: redis
-      ports:
-        - 6379:6379
-      options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+jobs:
+  test:
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Install packages
-      run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    - name: Checkout code
-      uses: actions/checkout@v4
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2.2
-        bundler-cache: true
+    steps:
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config
 
-    - name: Cache Ruby dependencies
-      uses: actions/cache@v3
-      with:
-        path: vendor/bundle
-        key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-3.2.2
-        restore-keys: |
-          setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup database
-      env:
-        RAILS_ENV: test
-        DATABASE_URL: postgres://postgres:postgres@localhost:5432
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      run: |
-        bin/rails db:create
-        bin/rails db:schema:load
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
 
-    - name: Run tests
-      env:
-        RAILS_ENV: test
-        DATABASE_URL: postgres://postgres:postgres@localhost:5432
-        REDIS_URL: redis://localhost:6379/0
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      run: |
-        tail -f log/test.log &
-        bin/rails db:test:prepare
-        bin/rails test
+      - name: Cache Ruby dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-3.2.2
+          restore-keys: |
+            setup-ruby-bundler-cache-v6-${{ runner.os }}-ruby-
 
-    - name: Show Rails logs if tests fail
-      if: failure()
-      run: cat log/test.log
+      - name: Setup database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          REDIS_URL: redis://localhost:6379/0
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: |
+          tail -f log/test.log &
+          bin/rails db:test:prepare
+          bin/rails test
+
+      - name: Show Rails logs if tests fail
+        if: failure()
+        run: cat log/test.log
