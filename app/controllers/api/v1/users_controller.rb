@@ -17,12 +17,8 @@ module Api
       end
 
       def show
-        if current_user
-          render json: UserSerializer.new(current_user).serializable_hash, status: :ok
-        else
-          render json: ErrorMessageSerializer.serialize('User not found', 404), status: :not_found
-        end
-      end      
+        render json: UserSerializer.new(current_user).serializable_hash, status: :ok
+      end       
 
       private
 

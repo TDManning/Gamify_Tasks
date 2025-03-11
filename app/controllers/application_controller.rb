@@ -9,14 +9,16 @@ class ApplicationController < ActionController::API
   def authorize_request
     header = request.headers['Authorization']
     token = header.split(' ').last if header
-
+  
     if token.present?
       decoded = AuthService.decode(token) rescue nil
       @current_user = User.find(decoded[:user_id]) if decoded
+      raise ActiveRecord::RecordNotFound unless @current_user
     end
-  
+    
     render_unauthorized unless @current_user
   end
+  
 
   def current_user
     @current_user

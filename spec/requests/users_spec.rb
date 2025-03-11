@@ -76,7 +76,22 @@ RSpec.describe 'User Requests', type: :request do
     end
   end
 
-
+  context 'when user does not exist' do
+    let(:deleted_user) { create(:user) }
+    let(:deleted_token) { AuthService.encode(user_id: deleted_user.id) }
+  
+    before do
+      deleted_user.destroy
+      get '/api/v1/users/profile', headers: { 'Authorization' => "Bearer #{deleted_token}" }
+    end
+  
+    it 'returns user not found error' do
+      expect(response).to have_http_status(:not_found)
+  
+      body = JSON.parse(response.body)
+      expect(body['errors'][0]['title']).to eq('Not found') 
+    end
+  end  
 
   describe 'GET /api/v1/users/profile' do
     context 'when authorized' do
