@@ -92,7 +92,7 @@
           1,
           1,
           null,
-          1,
+          2,
           null,
           null,
           null,
@@ -108,9 +108,9 @@
           1,
           1,
           null,
-          4,
+          3,
           null,
-          7,
+          6,
           null,
           null,
           null,
@@ -179,6 +179,7 @@
       },
       "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/controllers/api/v1/sessions_controller.rb": {
         "lines": [
+          null,
           1,
           1,
           1,
@@ -243,7 +244,6 @@
       },
       "/Users/terramanning/home/turing_work/4mod/Gamify_Tasks/gamified-task-manager-api/app/controllers/api/v1/users_controller.rb": {
         "lines": [
-          null,
           1,
           1,
           1,
@@ -264,6 +264,10 @@
           null,
           1,
           1,
+          1,
+          null,
+          0,
+          null,
           null,
           null,
           1,
@@ -311,6 +315,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1741654714
+    "timestamp": 1741654897
   }
 }

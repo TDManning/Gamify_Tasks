@@ -1,4 +1,3 @@
-# app/controllers/api/v1/users_controller.rb
 module Api
   module V1
     class UsersController < ApplicationController
@@ -18,7 +17,11 @@ module Api
       end
 
       def show
-        render json: UserSerializer.new(current_user).serializable_hash, status: :ok
+        if current_user
+          render json: UserSerializer.new(current_user).serializable_hash, status: :ok
+        else
+          render json: ErrorMessageSerializer.serialize('User not found', 404), status: :not_found
+        end
       end
 
       private
