@@ -51,4 +51,106 @@ RSpec.describe "Tasks API", type: :request do
       end
     end
   end
+
+  describe "POST /api/v1/tasks" do
+    let(:valid_params) { attributes_for(:task) }
+
+    context "when task is created successfully" do
+      it "creates a task and returns it" do
+        post '/api/v1/tasks', params: { task: valid_params }, headers: headers
+
+        expect(response).to have_http_status(:created)
+        expect(json['data']['attributes']['name']).to eq(valid_params[:name])
+      end
+    end
+
+    context "when task creation fails" do
+      before do
+        allow_any_instance_of(TaskService).to receive(:create).and_raise(
+          ServiceError.new(["Name can't be blank"], 422)
+        )
+      end
+
+      it "returns an error message" do
+        post '/api/v1/tasks', params: { task: { name: nil } }, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json['errors'].first['title']).to eq("Name can't be blank")
+      end
+    end
+  end
+
+  describe "PATCH /api/v1/tasks/:id" do
+    let(:valid_params) { { name: "Updated Task" } }
+
+    context "when task is updated successfully" do
+      it "updates the task and returns it" do
+        patch "/api/v1/tasks/#{task.id}", params: { task: valid_params }, headers: headers
+
+        expect(response).to have_http_status(:ok)
+        expect(json['data']['attributes']['name']).to eq("Updated Task")
+      end
+    end
+
+    context "when task update fails" do
+      before do
+        allow_any_instance_of(TaskService).to receive(:update).and_raise(
+          ServiceError.new(["Invalid update"], 422)
+        )
+      end
+
+      it "returns an error message" do
+        patch "/api/v1/tasks/#{task.id}", params: { task: { name: nil } }, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json['errors'].first['title']).to eq("Invalid update")
+      end
+    end
+  end
+
+  describe "DELETE /api/v1/tasks/:id" do
+    context "when task is destroyed successfully" do
+      it "returns no content" do
+        delete "/api/v1/tasks/#{task.id}", headers: headers
+
+        expect(response).to have_http_status(:no_content)
+        expect(Task.find_by(id: task.id)).to be_nil
+      end
+    end
+
+    context "when task destruction fails" do
+      before do
+        allow_any_instance_of(TaskService).to receive(:destroy).and_raise(
+          ServiceError.new(["Failed to destroy task"], 422)
+        )
+      end
+
+      it "returns an error message" do
+        delete "/api/v1/tasks/#{task.id}", headers: headers
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json['errors'].first['title']).to eq("Failed to destroy task")
+      end
+    end
+  end
+
+  describe "GET /api/v1/tasks/:id" do
+    context "when task exists" do
+      it "returns the task" do
+        get "/api/v1/tasks/#{task.id}", headers: headers
+
+        expect(response).to have_http_status(:ok)
+        expect(json['data']['attributes']['name']).to eq(task.name)
+      end
+    end
+
+    context "when task does not exist" do
+      it "returns not found" do
+        get "/api/v1/tasks/999999", headers: headers
+
+        expect(response).to have_http_status(:not_found)
+        expect(json['errors'].first['title']).to eq("Task not found")
+      end
+    end
+  end
 end
