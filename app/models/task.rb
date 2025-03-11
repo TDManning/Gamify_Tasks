@@ -14,6 +14,8 @@ class Task < ApplicationRecord
 
   scope :incomplete, -> { where(completed: false) }
 
+  scope :by_user, ->(user) { where(user: user) }
+
   private
 
   def downcase_status
