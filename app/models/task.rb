@@ -4,7 +4,6 @@ class Task < ApplicationRecord
   VALID_STATUSES = %w[pending in_progress completed].freeze
   VALID_PRIORITIES = %w[low medium high].freeze
 
-
   before_validation :downcase_priority, :downcase_status
 
   validates :name, presence: true, uniqueness: { scope: :user_id, case_sensitive: false }
@@ -13,8 +12,6 @@ class Task < ApplicationRecord
   validates :points_awarded, numericality: { greater_than_or_equal_to: 0 }
 
   scope :incomplete, -> { where(completed: false) }
-
-  scope :by_user, ->(user) { where(user: user) }
 
   private
 
