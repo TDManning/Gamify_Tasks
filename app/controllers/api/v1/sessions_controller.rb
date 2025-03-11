@@ -1,3 +1,4 @@
+# app/controllers/api/v1/sessions_controller.rb
 module Api
   module V1
     class SessionsController < ApplicationController
@@ -12,7 +13,7 @@ module Api
             token: token
           }, status: :created
         else
-          render json: ErrorSerializer.serialize(['Invalid email or password'], 401), status: :unauthorized
+          render json: ErrorMessageSerializer.serialize('Invalid email or password', 401), status: :unauthorized
         end
       end
     end

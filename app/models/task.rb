@@ -4,7 +4,6 @@ class Task < ApplicationRecord
   VALID_STATUSES = %w[pending in_progress completed].freeze
   VALID_PRIORITIES = %w[low medium high].freeze
 
-
   before_validation :downcase_priority, :downcase_status
 
   validates :name, presence: true, uniqueness: { scope: :user_id, case_sensitive: false }

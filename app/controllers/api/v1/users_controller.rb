@@ -4,21 +4,24 @@ module Api
       skip_before_action :authorize_request, only: [:create]
 
       def create
-        user = User.new(user_params)
-        if user.save
-          token = AuthService.encode(user_id: user.id)
+        result = UserService.create_user(user_params)
+
+        if result.success?
           render json: {
-            data: UserSerializer.new(user).serializable_hash[:data],
-            token: token
+            data: UserSerializer.new(result.user).serializable_hash[:data],
+            token: result.token
           }, status: :created
         else
-          render json: ErrorSerializer.serialize(user.errors.full_messages, 422), status: :unprocessable_entity
+          render json: ErrorSerializer.serialize(result.errors, 422), status: :unprocessable_entity
         end
       end
-      
 
       def show
-        render json: UserSerializer.new(current_user).serializable_hash, status: :ok
+        if current_user
+          render json: UserSerializer.new(current_user).serializable_hash, status: :ok
+        else
+          render json: ErrorMessageSerializer.serialize('User not found', 404), status: :not_found
+        end
       end
 
       private
