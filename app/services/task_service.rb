@@ -22,7 +22,7 @@ class TaskService
 
   def destroy(task)
     task.destroy!
-  rescue ActiveRecord::RecordNotDestroyed => e
-    raise ServiceError.new(e.record.errors.full_messages, 422)
-  end
+  rescue ActiveRecord::RecordNotDestroyed
+    raise ServiceError.new("Failed to destroy task", 422)
+  end  
 end

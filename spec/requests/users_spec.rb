@@ -76,6 +76,8 @@ RSpec.describe 'User Requests', type: :request do
     end
   end
 
+
+
   describe 'GET /api/v1/users/profile' do
     context 'when authorized' do
       before do
@@ -95,10 +97,11 @@ RSpec.describe 'User Requests', type: :request do
       before { get '/api/v1/users/profile' }
 
       it 'returns unauthorized error' do
-        expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:unauthorized)
 
-        body = JSON.parse(response.body)
-        expect(body['errors'][0]['title']).to eq('Not authorized')
+      body = JSON.parse(response.body)
+      puts response.body
+      expect(body['errors'][0]['title']).to eq('Not authorized')
       end
     end
   end

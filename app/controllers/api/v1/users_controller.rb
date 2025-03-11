@@ -22,7 +22,7 @@ module Api
         else
           render json: ErrorMessageSerializer.serialize('User not found', 404), status: :not_found
         end
-      end
+      end      
 
       private
 

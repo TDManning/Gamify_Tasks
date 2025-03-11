@@ -11,15 +11,11 @@ class ApplicationController < ActionController::API
     token = header.split(' ').last if header
 
     if token.present?
-      decoded = AuthService.decode(token)
+      decoded = AuthService.decode(token) rescue nil
       @current_user = User.find(decoded[:user_id]) if decoded
     end
   
     render_unauthorized unless @current_user
-  rescue ActiveRecord::RecordNotFound
-    render_unauthorized
-  rescue JWT::DecodeError
-    render_unauthorized
   end
 
   def current_user
@@ -27,10 +23,10 @@ class ApplicationController < ActionController::API
   end
 
   def render_unauthorized
-    render json: ErrorSerializer.serialize(['Not authorized'], 401), status: :unauthorized
+    render json: ErrorMessageSerializer.serialize('Not authorized', 401), status: :unauthorized
   end
 
   def render_not_found
-    render json: ErrorSerializer.serialize(['Not found'], 404), status: :not_found
+    render json: ErrorMessageSerializer.serialize('Not found', 404), status: :not_found
   end
 end
